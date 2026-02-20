@@ -3,7 +3,7 @@ name: Cricket Ticket Bot
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "* * * * *"   # Every 1 minute (TEST)
 
 jobs:
   run-bot:
