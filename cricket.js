@@ -1,3 +1,5 @@
+// 🔥 Cricket Ticket Bot - Auto 5 Minute Checker
+
 const https = require("https");
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -34,7 +36,10 @@ function sendTelegram(message) {
     const req = https.request(options, (res) => {
       let body = "";
       res.on("data", chunk => body += chunk);
-      res.on("end", () => resolve());
+      res.on("end", () => {
+        console.log("Telegram message sent");
+        resolve();
+      });
     });
 
     req.on("error", err => reject(err));
@@ -57,6 +62,7 @@ function fetchPage(url) {
 async function checkCricketBooking() {
 
   const now = new Date();
+  console.log("⏰ Bot Triggered At:", now.toISOString());
 
   if (now > STOP_DATE) {
     console.log("Deadline passed. Stopping checks.");
@@ -94,3 +100,5 @@ async function checkCricketBooking() {
 }
 
 checkCricketBooking();
+
+// 🔥 End of File (Activation Commit Line)
