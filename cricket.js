@@ -5,7 +5,7 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 const BOOKING_URL = "https://in.bookmyshow.com/sports/super-8-match-8-icc-men-s-t20-wc-2026/ET00474264";
 
-// 🔥 STOP DATE (26 Feb 2026)
+// STOP DATE
 const STOP_DATE = new Date("2026-02-26T23:59:59");
 
 if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
@@ -34,10 +34,7 @@ function sendTelegram(message) {
     const req = https.request(options, (res) => {
       let body = "";
       res.on("data", chunk => body += chunk);
-      res.on("end", () => {
-        console.log("Telegram Response:", body);
-        resolve();
-      });
+      res.on("end", () => resolve());
     });
 
     req.on("error", err => reject(err));
@@ -51,7 +48,6 @@ function fetchPage(url) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
       let data = "";
-
       res.on("data", chunk => data += chunk);
       res.on("end", () => resolve(data));
     }).on("error", reject);
@@ -77,23 +73,18 @@ async function checkCricketBooking() {
 `🏏 <b>BOOKING OPEN!</b>
 
 🎟 Match: Super 8 Match 8 - ICC Men's T20 WC 2026
-📍 Venue: (Check website for exact stadium)
+📍 Venue: Check BookMyShow
+🔗 ${BOOKING_URL}
 
-🔗 Book Now:
-${BOOKING_URL}
-
-⏳ Bot will keep checking until Feb 26.`
+🔥 Hurry up!`
       );
     } else {
       await sendTelegram(
-`🛡 Stay calm and face the battle.
+`🦁 CSK ku wait pannu 🦁
 
 ❌ Tickets not opened yet.
 
-Checked at:
-${now.toLocaleString()}
-
-🔁 Bot running every 15 minutes until Feb 26.`
+⏳ Bot checking every 5 minutes.`
       );
     }
 
